@@ -1,0 +1,17 @@
+{
+  "id": "./",
+  "name": "小家账本 · 家庭每日记账",
+  "short_name": "小家账本",
+  "description": "记录家庭收支、查看月度年度报表，并为家庭心愿制定攒钱计划。",
+  "lang": "zh-CN",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#f7f8f7",
+  "theme_color": "#f5f6f8",
+  "icons": [
+    { "src": "apple-touch-icon.png", "sizes": "180x180", "type": "image/png", "purpose": "any" },
+    { "src": "icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }
+  ]
+}

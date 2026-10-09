@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#f5f6f8" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-title" content="小家账本" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <link rel="manifest" href="manifest.webmanifest" />
+  <link rel="icon" href="icon.svg" type="image/svg+xml" />
+  <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+  <title>小家账本 · 每一笔都清楚</title>
+  <link rel="stylesheet" href="styles.css?v=6" />
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <div class="brand-mark">家</div>
+      <div class="brand-copy"><strong>小家账本</strong><span>把日子，记得清清楚楚</span></div>
+      <button class="icon-button" id="settingsBtn" aria-label="设置">···</button>
+    </header>
+
+    <main>
+      <section class="page active" id="homePage">
+        <div class="page-heading"><div><p class="eyebrow" id="todayLabel">今天</p><h1>家庭账本</h1></div><button class="period-chip" id="homePeriod"></button></div>
+        <div class="balance-card">
+          <div class="balance-head"><span id="summaryPeriodLabel">本月结余</span><span class="live-dot">● 已保存</span></div>
+          <div class="balance-number" id="homeBalance">¥0.00</div>
+          <div class="balance-stats"><div><span class="stat-label"><i class="income-dot"></i>收入</span><strong id="homeIncome">¥0</strong></div><div><span class="stat-label"><i class="expense-dot"></i>支出</span><strong id="homeExpense">¥0</strong></div></div>
+          <div class="balance-decoration"></div>
+        </div>
+        <button class="quick-add" id="quickAdd"><span class="plus">＋</span><span><strong>记一笔</strong><small>轻轻一点，快速记下收支</small></span><span class="arrow">›</span></button>
+        <section class="footprint-card"><div class="footprint-head"><div><h2>记账足迹</h2><p>每一笔记录，都有迹可循</p></div><span class="footprint-spark">✦</span></div><div class="footprint-stats"><div><strong id="loggedDays">0</strong><span>累计记账天数</span></div><div><strong id="loggedEntries">0</strong><span>累计录入笔数</span></div><div><strong id="currentStreak">0</strong><span>连续记账天数</span></div></div><div class="week-footprint" id="weekFootprint"></div><p class="footprint-note">撤销的账目仍保留痕迹，不计入收支汇总</p></section>
+        <div class="section-title"><div><h2>最近记录</h2><span id="recordCount">0 笔</span></div><button class="text-button" data-go="records">查看全部 <b>›</b></button></div>
+        <div class="record-list" id="recentList"></div>
+        <div class="empty-state hidden" id="homeEmpty"><div class="empty-icon">✦</div><strong>今天的生活，还没有被记下</strong><span>从第一笔开始，让家庭收支一目了然</span><button id="emptyAdd">记下第一笔</button></div>
+        <div class="home-note"><span>✧</span> 首次体验含示例账目，可在设置中清空</div>
+      </section>
+
+      <section class="page" id="statsPage">
+        <div class="page-heading"><div><p class="eyebrow">看见生活的流向</p><h1>收支分析</h1></div></div>
+        <div class="segmented"><button class="selected" data-range="month">月度</button><button data-range="year">年度</button></div>
+        <div class="period-select"><button id="periodPrev" aria-label="上一期">‹</button><strong id="statsPeriod"></strong><button id="periodNext" aria-label="下一期">›</button></div>
+        <div class="stats-total-card"><div class="stats-total-label">结余</div><strong id="statsBalance">¥0.00</strong><div class="mini-stats"><div><span><i class="income-dot"></i>总收入</span><b id="statsIncome">¥0</b></div><div><span><i class="expense-dot"></i>总支出</span><b id="statsExpense">¥0</b></div></div></div>
+        <div class="chart-card"><div class="card-title"><div><h2>收支趋势</h2><p id="trendCaption">每天的收支变化</p></div><span class="chart-legend"><i class="income-dot"></i>收入 <i class="expense-dot"></i>支出</span></div><div id="trendChart" class="trend-chart"></div></div>
+        <div class="chart-card category-card"><div class="card-title"><div><h2>支出分类</h2><p>钱主要花在了哪里</p></div></div><div id="categoryChart" class="category-chart"></div></div>
+        <div class="section-title category-details-title"><div><h2>分类明细</h2><span>点开查看每一笔</span></div></div>
+        <div class="category-list" id="categoryList"></div>
+      </section>
+
+      <section class="page" id="recordsPage">
+        <div class="page-heading"><div><p class="eyebrow">一笔一笔，都是生活</p><h1>全部账目</h1></div><button class="add-small" id="recordsAdd">＋ 记一笔</button></div>
+        <div class="filter-row"><button class="filter-chip active" data-filter="all">全部</button><button class="filter-chip" data-filter="expense">支出</button><button class="filter-chip" data-filter="income">收入</button><button class="filter-chip" data-filter="deleted">已撤销</button><button class="filter-date" id="recordPeriod"></button></div>
+        <div id="allRecords"></div>
+        <div class="empty-state hidden" id="recordsEmpty"><div class="empty-icon">✦</div><strong>还没有账目</strong><span>记下日常收支，慢慢看见生活全貌</span><button id="recordsEmptyAdd">记一笔</button></div>
+      </section>
+
+      <section class="page" id="savingsPage">
+        <div class="page-heading"><div><p class="eyebrow">一点一点，存下想要的未来</p><h1>攒钱计划</h1></div><button class="add-small" id="newGoalBtn">＋ 新计划</button></div>
+        <div class="savings-overview"><div class="overview-copy"><span>所有计划已攒</span><strong id="savedTotal">¥0</strong><small id="goalOverviewHint">开始为心愿攒下一笔</small></div><div class="overview-ring" id="overviewRing"><div><strong id="overallPercent">0%</strong><span>目标进度</span></div></div></div>
+        <div class="savings-caption"><strong>我的目标</strong><span id="goalCount">0 个计划</span></div>
+        <div class="goal-list" id="goalList"></div>
+        <div class="empty-state hidden" id="goalsEmpty"><div class="empty-icon">✧</div><strong>给未来定一个小目标</strong><span>设置目标金额，进度会自动为你呈现</span><button id="emptyGoalBtn">创建攒钱计划</button></div>
+        <div class="home-note"><span>✧</span> 攒入金额只更新计划进度，不计入日常收支</div>
+      </section>
+    </main>
+
+    <nav class="tabbar"><button class="tab active" data-page="homePage"><span class="tab-icon">⌂</span><span>首页</span></button><button class="tab" data-page="statsPage"><span class="tab-icon">◔</span><span>报表</span></button><button class="tab" data-page="savingsPage"><span class="tab-icon">✧</span><span>攒钱</span></button><button class="tab" data-page="recordsPage"><span class="tab-icon">▤</span><span>明细</span></button></nav>
+  </div>
+
+  <div class="sheet-backdrop hidden" id="entryBackdrop"><section class="entry-sheet" role="dialog" aria-modal="true" aria-labelledby="entryTitle"><div class="sheet-handle"></div><div class="sheet-header"><h2 id="entryTitle">记一笔</h2><button class="close-button" id="closeEntry">×</button></div><div class="type-switch"><button class="selected" data-type="expense">支出</button><button data-type="income">收入</button></div><label class="amount-wrap"><span>¥</span><input id="amountInput" type="number" inputmode="decimal" min="0.01" step="0.01" placeholder="0.00" /></label><div class="field-label">选择分类</div><div class="category-picker" id="categoryPicker"></div><div class="child-picker" id="childPicker"></div><div class="field-grid"><label><span>日期</span><input id="dateInput" type="date" /></label><label><span>备注</span><input id="noteInput" type="text" maxlength="40" placeholder="写点什么（选填）" /></label></div><button class="save-entry" id="saveEntry">保存这笔</button></section></div>
+
+  <div class="sheet-backdrop hidden" id="goalBackdrop"><section class="entry-sheet goal-sheet" role="dialog" aria-modal="true" aria-labelledby="goalTitle"><div class="sheet-handle"></div><div class="sheet-header"><h2 id="goalTitle">新建攒钱计划</h2><button class="close-button" id="closeGoal">×</button></div><div class="goal-type-switch"><button class="selected" data-goal-kind="free">自由攒钱</button><button data-goal-kind="fixed">定额攒钱</button></div><label class="goal-field"><span>给计划起个名字</span><input id="goalName" type="text" maxlength="20" placeholder="例如：家庭备用金" /></label><label class="goal-field"><span>目标金额</span><div class="goal-input-wrap"><b>¥</b><input id="goalTarget" type="number" min="1" inputmode="decimal" placeholder="请输入目标金额" /></div></label><label class="goal-field hidden" id="monthlyGoalField"><span>每月固定攒入</span><div class="goal-input-wrap"><b>¥</b><input id="goalMonthly" type="number" min="1" inputmode="decimal" placeholder="例如：1000" /></div></label><label class="goal-field"><span>已经攒下（选填）</span><div class="goal-input-wrap"><b>¥</b><input id="goalSaved" type="number" min="0" inputmode="decimal" placeholder="0" /></div></label><label class="goal-field"><span>计划完成日期（选填）</span><input id="goalDate" type="date" /></label><button class="save-entry" id="saveGoal">创建计划</button></section></div>
+
+  <div class="sheet-backdrop hidden" id="depositBackdrop"><section class="entry-sheet deposit-sheet" role="dialog" aria-modal="true" aria-labelledby="depositTitle"><div class="sheet-handle"></div><div class="sheet-header"><h2 id="depositTitle">记一笔攒入</h2><button class="close-button" id="closeDeposit">×</button></div><p class="deposit-goal-name" id="depositGoalName"></p><label class="amount-wrap"><span>¥</span><input id="depositAmount" type="number" min="0.01" inputmode="decimal" placeholder="0.00" /></label><button class="save-entry" id="saveDeposit">确认攒入</button></section></div>
+
+  <div class="confirm-backdrop hidden" id="savingsLockBackdrop"><section class="confirm-card lock-card" role="dialog" aria-modal="true" aria-labelledby="lockTitle"><div class="empty-icon">⌑</div><h2 id="lockTitle">攒钱计划已加密</h2><p id="lockHint">首次进入请设置一个 6 位数字密码。忘记密码将无法恢复加密计划。</p><label class="lock-field"><input id="lockPassword" type="password" inputmode="numeric" maxlength="6" placeholder="请输入 6 位数字密码" autocomplete="off" /></label><label class="lock-field hidden" id="lockConfirmField"><input id="lockPasswordConfirm" type="password" inputmode="numeric" maxlength="6" placeholder="请再次输入密码" autocomplete="off" /></label><button class="save-entry" id="unlockSavings">设置密码并进入</button><button class="cancel-button" id="cancelLock">取消</button><button class="forgot-button hidden" id="forgotSavings">忘记密码？清除计划并重设</button></section></div>
+
+  <div class="toast" id="toast"></div>
+  <div class="confirm-backdrop hidden" id="settingsBackdrop"><section class="confirm-card"><div class="empty-icon">⚙</div><h2>账本设置</h2><p>账目只保存在这台设备的浏览器中。当前示例账目可清空；清除操作无法恢复。</p><button class="danger-button" id="clearData">清空全部本地账目</button><button class="cancel-button" id="closeSettings">完成</button></section></div>
+  <script src="app.js?v=6"></script>
+  <script>if ('serviceWorker' in navigator) window.addEventListener('load', () => navigator.serviceWorker.register('./service-worker.js'));</script>
+</body>
+</html>
