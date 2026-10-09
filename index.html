@@ -11,7 +11,7 @@
   <link rel="icon" href="icon.svg" type="image/svg+xml" />
   <link rel="apple-touch-icon" href="apple-touch-icon.png" />
   <title>小家账本 · 每一笔都清楚</title>
-  <link rel="stylesheet" href="styles.css?v=6" />
+  <link rel="stylesheet" href="styles.css?v=7" />
 </head>
 <body>
   <div class="app-shell">
@@ -35,7 +35,7 @@
         <div class="section-title"><div><h2>最近记录</h2><span id="recordCount">0 笔</span></div><button class="text-button" data-go="records">查看全部 <b>›</b></button></div>
         <div class="record-list" id="recentList"></div>
         <div class="empty-state hidden" id="homeEmpty"><div class="empty-icon">✦</div><strong>今天的生活，还没有被记下</strong><span>从第一笔开始，让家庭收支一目了然</span><button id="emptyAdd">记下第一笔</button></div>
-        <div class="home-note"><span>✧</span> 首次体验含示例账目，可在设置中清空</div>
+        <div class="home-note"><span>✧</span> 首次体验含示例账目，可在设置的数据管理中清空</div>
       </section>
 
       <section class="page" id="statsPage">
@@ -78,8 +78,8 @@
   <div class="confirm-backdrop hidden" id="savingsLockBackdrop"><section class="confirm-card lock-card" role="dialog" aria-modal="true" aria-labelledby="lockTitle"><div class="empty-icon">⌑</div><h2 id="lockTitle">攒钱计划已加密</h2><p id="lockHint">首次进入请设置一个 6 位数字密码。忘记密码将无法恢复加密计划。</p><label class="lock-field"><input id="lockPassword" type="password" inputmode="numeric" maxlength="6" placeholder="请输入 6 位数字密码" autocomplete="off" /></label><label class="lock-field hidden" id="lockConfirmField"><input id="lockPasswordConfirm" type="password" inputmode="numeric" maxlength="6" placeholder="请再次输入密码" autocomplete="off" /></label><button class="save-entry" id="unlockSavings">设置密码并进入</button><button class="cancel-button" id="cancelLock">取消</button><button class="forgot-button hidden" id="forgotSavings">忘记密码？清除计划并重设</button></section></div>
 
   <div class="toast" id="toast"></div>
-  <div class="confirm-backdrop hidden" id="settingsBackdrop"><section class="confirm-card"><div class="empty-icon">⚙</div><h2>账本设置</h2><p>账目只保存在这台设备的浏览器中。当前示例账目可清空；清除操作无法恢复。</p><button class="danger-button" id="clearData">清空全部本地账目</button><button class="cancel-button" id="closeSettings">完成</button></section></div>
-  <script src="app.js?v=6"></script>
+  <div class="confirm-backdrop hidden" id="settingsBackdrop"><section class="confirm-card"><div class="empty-icon">⚙</div><h2>账本设置</h2><p>账目只保存在这台设备的浏览器中。</p><button class="settings-secondary" id="dataManagementToggle" aria-expanded="false">数据管理</button><div class="data-management hidden" id="dataManagement"><p>清空后无法恢复，请谨慎操作。</p><button class="danger-button" id="clearData">清空本地账目</button></div><button class="cancel-button" id="closeSettings">完成</button></section></div>
+  <script src="app.js?v=7"></script>
   <script>if ('serviceWorker' in navigator) window.addEventListener('load', () => navigator.serviceWorker.register('./service-worker.js'));</script>
 </body>
 </html>
